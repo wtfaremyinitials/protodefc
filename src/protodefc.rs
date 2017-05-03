@@ -8,6 +8,7 @@ use std::fs::File;
 use std::io::{Read, Write};
 
 use protodefc::backend::Backend;
+use protodefc::frontend::Frontend;
 
 arg_enum! {
     #[derive(Debug)]
@@ -90,11 +91,11 @@ fn run(matches: &clap::ArgMatches) -> Result<()> {
         let mut input_str = String::new();
         input_file.read_to_string(&mut input_str).unwrap();
 
-        let cu = protodefc::spec_to_final_compilation_unit(&input_str)?;
-
+        let frontend: Frontend = protodefc::spec_to_final_compilation_unit;
         let backend: Backend = target.into();
 
-        let out = backend(&cu)?;
+        let ir = frontend(&input_str)?;
+        let out = backend(&ir)?;
 
         let mut output_file = File::create(output_file).unwrap();
         output_file.write(out.as_bytes()).unwrap();
