@@ -6,7 +6,7 @@ use ::ir::compilation_unit::CompilationUnit;
 use ::errors::*;
 
 pub fn compile(cu: &CompilationUnit) -> Result<String> {
-    let mut out = String::new();
+    let mut out = String::from(include_str!("./builtins.rs"));
     cu_to_rs::generate_compilation_unit(cu, &mut out)?;
     Ok(out)
 }

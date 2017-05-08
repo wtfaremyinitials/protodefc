@@ -68,7 +68,7 @@ pub fn build_expr(expr: &ib::Expr) -> Result<String> {
             format!("{}.{}", input_var, field.pascal()),
         ib::Expr::ArrayLength(ref array) =>
             format!("{}.len()", array),
-        _ => unimplemented!(),
+        ib::Expr::BinarySize(ref var, ref enc) => format!("unimplemented!()") // TODO
     };
     Ok(res)
 }

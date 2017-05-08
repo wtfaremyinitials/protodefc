@@ -41,7 +41,21 @@ pub fn generate_compilation_unit(cu: &CompilationUnit, out: &mut String)
                     type_container.clone()
                 )?);
             }
-            _ => (),
+            TypeKind::Native(_) => {
+                let name = format!("{}", typ_inner.path.name);
+                b.let_assign(
+                    typ_name_size_of.clone(),
+                    format!("natives_{}_size_of", name)
+                );
+                b.let_assign(
+                    typ_name_serialize.clone(),
+                    format!("natives_{}_serialize", name)
+                );
+                b.let_assign(
+                    typ_name_deserialize.clone(),
+                    format!("natives_{}_deserialize", name)
+                );
+            },
         }
     }
 
